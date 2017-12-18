@@ -1,0 +1,405 @@
+﻿<Controls:MetroWindow 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:MaterialDesignColors="clr-namespace:MaterialDesignColors;assembly=MaterialDesignColors"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:Converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" x:Name="Frame" mc:Ignorable="d" x:Class="TPGO_ConneX.MainWindow"
+        xmlns:Globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:graphsharp="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
+        xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+        Title="ConneX Graph" Height="600" Width="900"
+     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="#FFFAFAFA"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" GlowBrush="#FF060000" WindowTitleBrush="Black"
+    >
+
+    <Controls:MetroWindow.Resources>
+
+
+
+        <Style TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}" >
+                        <Border BorderBrush="#FF2EADF5" 
+                                Background="#FF2EADF5"
+                                BorderThickness="2"
+                                CornerRadius="10,10,10,10"
+                                Padding="5px"
+                               >
+                            <ContentPresenter Content="{TemplateBinding Vertex}" IsEnabled="False" OpacityMask="{x:Null}"/>
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" Color="LightGray" Opacity="0.5" Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type graphsharp:EdgeControl}">
+            <Style.Resources>
+                <ToolTip x:Key="ToolTipContent">
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" Foreground="White"/>
+                    </StackPanel>
+                </ToolTip>
+            </Style.Resources>
+            <Setter Property="ToolTip" Value="{StaticResource ToolTipContent}"/>
+        </Style>
+
+
+
+        <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidForegroundBrush}"/>
+            <Setter Property="materialDesign:RippleAssist.Feedback" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="16,4"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="Storyboard1">
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="grid">
+                                    <EasingThicknessKeyFrame KeyTime="0:0:0.5" Value="0,0,-23.906,0"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="Storyboard2">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="grid">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="1.097"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="grid">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="10.547"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                                <Grid>
+                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="2">
+                                        <Border.Effect>
+                                            <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
+                                                <Binding.Converter>
+                                                    <Converters:ShadowConverter/>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </Border.Effect>
+                                    </Border>
+                                    <Border Background="{DynamicResource MaterialDesignBackground}" HorizontalAlignment="Left" Opacity="0.4">
+                                        <Border.Width>
+                                            <MultiBinding UpdateSourceTrigger="Default">
+                                                <MultiBinding.Converter>
+                                                    <Converters:RangeLengthConverter/>
+                                                </MultiBinding.Converter>
+                                                <Binding Path="(materialDesign:ButtonProgressAssist.Minimum)" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="(materialDesign:ButtonProgressAssist.Maximum)" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="(materialDesign:ButtonProgressAssist.Value)" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="ActualWidth" RelativeSource="{RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}"/>
+                                            </MultiBinding>
+                                        </Border.Width>
+                                    </Border>
+                                </Grid>
+                            </AdornerDecorator>
+                            <materialDesign:Ripple ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Focusable="False" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.ExitActions>
+                                    <StopStoryboard BeginStoryboardName="Storyboard2_BeginStoryboard"/>
+                                </Trigger.ExitActions>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
+                                    <BeginStoryboard x:Name="Storyboard2_BeginStoryboard" Storyboard="{StaticResource Storyboard2}"/>
+                                </Trigger.EnterActions>
+                                <Setter Property="materialDesign:ShadowAssist.Darken" TargetName="border" Value="True"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="materialDesign:ShadowAssist.Darken" TargetName="border" Value="True"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.23"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonStyle2" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidForegroundBrush}"/>
+            <Setter Property="materialDesign:RippleAssist.Feedback" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="16,4"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="Storyboard1">
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="grid">
+                                    <EasingThicknessKeyFrame KeyTime="0:0:0.5" Value="0,0,-22.5,0"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="Storyboard2">
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="grid">
+                                    <EasingThicknessKeyFrame KeyTime="0" Value="0,0,-22.5,0"/>
+                                    <EasingThicknessKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                                </ThicknessAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Grid x:Name="grid">
+                            <AdornerDecorator CacheMode="{Binding (materialDesign:ShadowAssist.CacheMode), RelativeSource={RelativeSource Self}}">
+                                <Grid>
+                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="2">
+                                        <Border.Effect>
+                                            <Binding Path="(materialDesign:ShadowAssist.ShadowDepth)" RelativeSource="{RelativeSource TemplatedParent}">
+                                                <Binding.Converter>
+                                                    <Converters:ShadowConverter/>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </Border.Effect>
+                                    </Border>
+                                    <Border Background="{DynamicResource MaterialDesignBackground}" HorizontalAlignment="Left" Opacity="0.4">
+                                        <Border.Width>
+                                            <MultiBinding UpdateSourceTrigger="Default">
+                                                <MultiBinding.Converter>
+                                                    <Converters:RangeLengthConverter/>
+                                                </MultiBinding.Converter>
+                                                <Binding Path="(materialDesign:ButtonProgressAssist.Minimum)" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="(materialDesign:ButtonProgressAssist.Maximum)" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="(materialDesign:ButtonProgressAssist.Value)" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="ActualWidth" RelativeSource="{RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ButtonBase}}"/>
+                                            </MultiBinding>
+                                        </Border.Width>
+                                    </Border>
+                                </Grid>
+                            </AdornerDecorator>
+                            <materialDesign:Ripple ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Focusable="False" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.ExitActions>
+                                    <StopStoryboard BeginStoryboardName="Storyboard2_BeginStoryboard"/>
+                                    <StopStoryboard BeginStoryboardName="Storyboard2_BeginStoryboard"/>
+                                    <StopStoryboard BeginStoryboardName="Storyboard2_BeginStoryboard"/>
+                                    <BeginStoryboard x:Name="Storyboard2_BeginStoryboard" Storyboard="{StaticResource Storyboard2}"/>
+                                </Trigger.ExitActions>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
+                                </Trigger.EnterActions>
+                                <Setter Property="materialDesign:ShadowAssist.Darken" TargetName="border" Value="True"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="materialDesign:ShadowAssist.Darken" TargetName="border" Value="True"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.23"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ImageStyle1" TargetType="{x:Type Image}">
+            <Style.Resources>
+                <Storyboard x:Key="OnMouseEnter1">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="{x:Null}">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="30"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="-30"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="0"/>
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </Style.Resources>
+            <Setter Property="FlowDirection" Value="LeftToRight"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded"/>
+                <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                    <BeginStoryboard Storyboard="{StaticResource OnMouseEnter1}"/>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Controls:MetroWindow.Resources>
+
+    <Grid>
+
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="526" Margin="218,45,-10,0" VerticalAlignment="Top" Width="686" Background="{x:Null}" Foreground="{x:Null}" Opacity="0.8">
+            <TabItem x:Name="Home" Background="{x:Null}">
+                <Grid>
+                    <Image Margin="-4,-5,1,-5" Source="img/polygon_green.jpg" Stretch="UniformToFill" OpacityMask="#FF8460C4"/>
+                    <TextBlock HorizontalAlignment="Left" Height="148" TextWrapping="Wrap" VerticalAlignment="Top" Width="403" Margin="133,130,0,0" Foreground="#FFFFE6E6" FontSize="60" FontFamily="Arial Rounded MT Bold"><Run Text="ConneX                   "/><Run Language="fr-fr" Text="       "/><Run Text="Graph"/></TextBlock>
+                    <Rectangle Fill="#FFFF8D04" HorizontalAlignment="Left" Height="4" Margin="133,278,0,0" Stroke="#FFFF8D04" VerticalAlignment="Top" Width="417" Opacity="0.9"/>
+                </Grid>
+
+            </TabItem>
+            <TabItem>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="56*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="85*"/>
+                        <RowDefinition Height="64*"/>
+                        <RowDefinition Height="366*"/>
+                    </Grid.RowDefinitions>
+                    <Image Margin="0,-19,0,10" Source="img/fond4.jpg" Grid.RowSpan="3" Grid.ColumnSpan="2" Stretch="Fill"/>
+                    <Border BorderBrush="#FF2D9DDE" BorderThickness="2" HorizontalAlignment="Left" Height="405" Margin="219,49,0,0" VerticalAlignment="Top" Width="426" Grid.RowSpan="3" Grid.ColumnSpan="2" Background="White" >
+
+                    </Border>
+
+                    <graphsharp:GraphLayout                       
+                x:Name="Glayout" Visibility="Visible"
+                Graph="{Binding}"
+                LayoutAlgorithmType="KK"
+                OverlapRemovalAlgorithmType="FSA"
+                HighlightAlgorithmType="Simple" OpacityMask="#FF2EADF5" Margin="219,49,35,61" Grid.RowSpan="3" Grid.ColumnSpan="2">
+                        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="2" VerticalAlignment="Top" Width="2"/>
+                    </graphsharp:GraphLayout>
+                    <Border BorderBrush="#FF56B0E4" BorderThickness="2" HorizontalAlignment="Left" Height="405" Margin="21,49,0,0" VerticalAlignment="Top" Width="193" Grid.RowSpan="3" Background="White">
+                        <Rectangle Fill="#FF2D9DDE" HorizontalAlignment="Left" Height="25" Margin="-2,-1,-2,0" Stroke="#FF2D9DDE" VerticalAlignment="Top" Width="193"/>
+                    </Border>
+                    <Label HorizontalAlignment="Left" Margin="54,47,0,0" VerticalAlignment="Top" Height="36" Width="142" Content="Control Panel" Foreground="#DDF7F3F3" FontSize="16" FontFamily="Arial Rounded MT Bold"/>
+                    <TextBox x:Name="nbVirText" HorizontalAlignment="Left" Height="26" Margin="43,22,0,0" Grid.Row="1" Text="NB Vertex" VerticalAlignment="Top" Width="87" Controls:TextBoxHelper.Watermark="NB Edge" Controls:TextBoxHelper.ClearTextButton="True" SelectionOpacity="-1" Background="{x:Null}" Foreground="#FF858585" GotFocus="nbVirText_GotFocus"/>
+                    <Button x:Name="nbVir" Content="OK" HorizontalAlignment="Left" Height="27" Margin="142,22,0,0" Grid.Row="1" VerticalAlignment="Top" Width="56" Background="#FF2D9DDE" BorderBrush="#FF2D9DDE" Click="nbVir_Click"/>
+                    <Rectangle Fill="#FF2D9DDE" HorizontalAlignment="Left" Height="25" Margin="21,5,0,0" Stroke="#FF2D9DDE" VerticalAlignment="Top" Width="193" Grid.Row="2"/>
+                    <Label HorizontalAlignment="Left" Margin="90,2,0,0" VerticalAlignment="Top" Height="36" Width="55" Content="Edit" Foreground="#DDF7F3F3" FontSize="16" FontFamily="Arial Rounded MT Bold" Grid.Row="2"/>
+                    <Button x:Name="addV" Content="Add Vertex" HorizontalAlignment="Left" Height="27" Margin="43,43,0,0" VerticalAlignment="Top" Width="153" Grid.Row="2" Background="#FF2D9DDE" BorderBrush="#FF2D9DDE" Click="Button_Click_1"/>
+                    <ComboBox x:Name="edge2" HorizontalAlignment="Left" Height="27" Margin="49,154,0,0" VerticalAlignment="Top" Width="137" Grid.Row="2"/>
+                    <ComboBox x:Name="edge1" HorizontalAlignment="Left" Height="27" Margin="50,122,0,0" VerticalAlignment="Top" Width="137" Grid.Row="2"/>
+                    <Border BorderBrush="#FF2D9DDE" BorderThickness="2
+                            " HorizontalAlignment="Left" Height="145" Margin="28,86,0,0" VerticalAlignment="Top" Width="180" Grid.Row="2">
+                        <Button x:Name="add" Content="Add " HorizontalAlignment="Left" Height="27" VerticalAlignment="Top" Width="82" Background="#FF2D9DDE" BorderBrush="#FF2D9DDE" Margin="2,104,0,0" Click="Button_Click"/>
+                    </Border>
+                    <Button x:Name="Rem" Content="Remove" HorizontalAlignment="Left" Height="26" Margin="119,193,0,0" Grid.Row="2" VerticalAlignment="Top" Width="82" FontSize="14" Background="#FF2D9DDE" BorderBrush="#FF2D9DDE" Click="Button_Click_3"/>
+                    <Button x:Name="Reset" Content="Reset" HorizontalAlignment="Left" Height="29" Margin="43,256,0,0" Grid.Row="2" VerticalAlignment="Top" Width="153" Background="#FF2D9DDE" BorderBrush="#FF2D9DDE" Click="Reset_Click"/>
+                    <Label Content="Edge" HorizontalAlignment="Left" Height="29" Margin="88,93,0,0" Grid.Row="2" VerticalAlignment="Top" Width="42"/>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <Grid>
+                    <Image Margin="-9,0,-2,10" Source="img/fond4.jpg" Stretch="Fill"/>
+                    <Border BorderBrush="#FF2D9DDE" BorderThickness="2" HorizontalAlignment="Left" Height="400" Margin="64,80,0,0" VerticalAlignment="Top" Width="584" />
+
+                    <zoom:ZoomControl Background="#FFFFFBFB" Margin="67,82,35,38">
+                        <graphsharp:GraphLayout   
+                        
+                x:Name="Glayout2" Visibility="Visible"
+                Graph="{Binding}"
+                
+                OverlapRemovalAlgorithmType="FSA"
+                HighlightAlgorithmType="Simple" OpacityMask="#FF2EADF5" Margin="84,47,75,46" RenderTransformOrigin="-1.013,-0.073"/>
+                    </zoom:ZoomControl>
+
+
+
+
+                    <ComboBox x:Name="DisplyM" HorizontalAlignment="Left" Height="28" Margin="180,15,0,0" VerticalAlignment="Top" Width="143" SelectionChanged="DisplyM_SelectionChanged"/>
+                    <Label Content="Layout Algorithm" HorizontalAlignment="Left" Height="34" Margin="53,15,0,0" VerticalAlignment="Top" Width="122"/>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <Grid>
+                    
+
+
+                    <Image Margin="-12,0,0,10" Source="img/fond4.jpg" Stretch="Fill"/>
+                    <Button Content="Execute ConneX Graph Algorithm" HorizontalAlignment="Left" Height="54" Margin="239,398,0,0" VerticalAlignment="Top" Width="315" Click="Button_Click_2" Background="#FF2D9DDE" BorderBrush="#FF2D9DDE"/>
+                        <Border BorderBrush="#FF2D9DDE" BorderThickness="2" HorizontalAlignment="Left" Height="293" Margin="126,82,0,0" VerticalAlignment="Top" Width="522" />
+                        <zoom:ZoomControl Background="#FFFFFBFB" Margin="133,85,37,142">
+                        <graphsharp:GraphLayout   
+                        
+                x:Name="Glayout3" Visibility="Visible"
+                Graph="{Binding}"             
+                OverlapRemovalAlgorithmType="FSA"
+                HighlightAlgorithmType="Simple" OpacityMask="#FF2EADF5" Margin="84,47,75,46" RenderTransformOrigin="-1.013,-0.073"/>
+                    </zoom:ZoomControl>
+                    <StackPanel x:Name="ElipsePanel" HorizontalAlignment="Left" Height="398" Margin="17,82,0,0" VerticalAlignment="Top" Width="81"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Rectangle Fill="#FF000008" HorizontalAlignment="Left" Height="592" Margin="-1,-4,0,-17" Stroke="Black" VerticalAlignment="Top" Width="219" Opacity="0.9"/>
+        <Button x:Name="bt2" Content="Display Graph" HorizontalAlignment="Left" Height="46" Margin="0,292,0,0" VerticalAlignment="Top" Width="218" Style="{DynamicResource ButtonStyle2}" Background="#FF28272B" Opacity="0.8" BorderBrush="#FF030008" Click="bt2_Click" MouseEnter="bt2_MouseEnter" MouseLeave="bt2_MouseLeave" FontFamily="Arial Rounded MT Bold"/>
+        <Button x:Name="bt1" Content="Create Graph" HorizontalAlignment="Left" Height="46" Margin="0,245,0,0" VerticalAlignment="Top" Width="218" Style="{DynamicResource ButtonStyle2}" Background="#FF28272B" Opacity="0.8" BorderBrush="#FF030008" Click="bt1_Click" MouseEnter="bt1_MouseEnter" MouseLeave="bt1_MouseLeave" FontFamily="Arial Rounded MT Bold" FontSize="16"/>
+        <Rectangle Fill="#FF000008" HorizontalAlignment="Left" Height="57" Margin="218,-4,-10,0" Stroke="Black" VerticalAlignment="Top" Width="686" Opacity="0.9"/>
+        <Rectangle Fill="#FF2EADF5" HorizontalAlignment="Left" Height="3" Margin="218,51,-8,0" Stroke="#FF2EADF5" VerticalAlignment="Top" Width="684"/>
+        <Rectangle Fill="#FF2EADF5" HorizontalAlignment="Left" Height="1" Margin="-1,291,0,0" Stroke="#FF2EADF5" VerticalAlignment="Top" Width="219"/>
+        <Rectangle Fill="#FF2EADF5" HorizontalAlignment="Left" Height="1" Margin="-1,337,0,0" Stroke="#FF2EADF5" VerticalAlignment="Top" Width="219"/>
+        <Rectangle Fill="#FF191921" HorizontalAlignment="Left" Height="20" Margin="218,551,-10,0" Stroke="#FF191921" VerticalAlignment="Top" Width="686" Opacity="0.9"/>
+        <Button x:Name="homeBnt" HorizontalAlignment="Left" Height="75" Margin="65,151,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource MaterialDesignFloatingActionLightButton}" Background="#FF252429" BorderBrush="#FF2EADF5" Click="homeBnt_Click" MouseEnter="homeBnt_MouseEnter" MouseLeave="homeBnt_MouseLeave">
+            <Image HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="50" Source="img/home.png"/>
+        </Button>
+        <Rectangle Fill="#FF2EADF5" HorizontalAlignment="Left" Height="194" Margin="217,51,0,0" Stroke="#FF2EADF5" VerticalAlignment="Top" Width="3"/>
+        <Rectangle Fill="#FF2EADF5" HorizontalAlignment="Left" Height="1" Margin="-1,245,0,0" Stroke="#FF2EADF5" VerticalAlignment="Top" Width="219"/>
+        <Rectangle Fill="#FF2EADF5" HorizontalAlignment="Left" Height="168" Margin="217,383,0,0" Stroke="#FF2EADF5" VerticalAlignment="Top" Width="3"/>
+        <Button x:Name="bt3" Content="Execute Algorithm" HorizontalAlignment="Left" Height="46" Margin="0,338,0,0" VerticalAlignment="Top" Width="218" Style="{DynamicResource ButtonStyle2}" Background="#FF28272B" Opacity="0.8" BorderBrush="#FF030008" Click="bt3_Click" MouseEnter="bt3_MouseEnter" MouseLeave="bt3_MouseLeave" FontFamily="Arial Rounded MT Bold"/>
+        <Rectangle Fill="#FF2EADF5" HorizontalAlignment="Left" Height="1" Margin="-1,382,0,0" Stroke="#FF2EADF5" VerticalAlignment="Top" Width="219"/>
+        <TextBlock x:Name="header" HorizontalAlignment="Left" Height="36" Margin="238,10,0,0" TextWrapping="Wrap" Text="Home" VerticalAlignment="Top" Width="228" Foreground="#DDF7EEEE" FontFamily="Arial Rounded MT Bold" FontWeight="Normal" FontSize="20"/>
+        <Image HorizontalAlignment="Left" Height="87" Margin="49,20,0,0" VerticalAlignment="Top" Width="115" Source="img/esiLogo.png"/>
+    </Grid>
+
+</Controls:MetroWindow>
